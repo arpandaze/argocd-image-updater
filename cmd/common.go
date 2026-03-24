@@ -33,6 +33,8 @@ type WebhookConfig struct {
 	HarborSecret string
 	// AliyunACRSecret is the secret for validating Aliyun ACR webhooks
 	AliyunACRSecret string
+	// AzureACRSecret is the secret for validating Azure ACR webhooks
+	AzureACRSecret string
 	// CloudEventsSecret is the secret for validating CloudEvents webhooks
 	CloudEventsSecret string
 	// RateLimitNumAllowedRequests is the number of allowed requests per hour for rate limiting (0 disables rate limiting)
@@ -128,6 +130,7 @@ func SetupWebhookServer(webhookCfg *WebhookConfig, reconciler *controller.ImageU
 	handler.RegisterHandler(webhook.NewHarborWebhook(webhookCfg.HarborSecret))
 	handler.RegisterHandler(webhook.NewQuayWebhook(webhookCfg.QuaySecret))
 	handler.RegisterHandler(webhook.NewAliyunACRWebhook(webhookCfg.AliyunACRSecret))
+	handler.RegisterHandler(webhook.NewAzureACRWebhook(webhookCfg.AzureACRSecret))
 	handler.RegisterHandler(webhook.NewCloudEventsWebhook(webhookCfg.CloudEventsSecret))
 
 	// Create webhook server
